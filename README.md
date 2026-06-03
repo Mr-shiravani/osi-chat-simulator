@@ -670,7 +670,6 @@ in the Software without restriction...
 
 - 📖 Read the [Quick Start](#quick-start) guide
 - 💬 Check [existing issues](https://github.com/Mr-shiravani/osi-chat-simulator/issues)
-- 🆕 [Create a new issue](https://github.com/Mr-shiravani/osi-chat-simulator/issues/new)
 
 ### Reporting Bugs
 

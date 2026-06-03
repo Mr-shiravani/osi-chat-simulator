@@ -620,7 +620,7 @@ Contributions are welcome! Here's how you can help:
 ## 🗺️ Roadmap
 
 ### Version 3.1 (Planned)
-- [ ] Multi-language support (English, Arabic)
+- [ ] Multi-language support (English,)
 - [ ] Dark/Light theme toggle
 - [ ] More protocol options (HTTP/2, WebSocket)
 - [ ] Save/Load session state

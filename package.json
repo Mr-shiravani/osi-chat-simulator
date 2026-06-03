@@ -1,0 +1,32 @@
+{
+  "name": "osi-chat-simulator",
+  "version": "3.0.0",
+  "description": "An interactive educational web application that visualizes the OSI model layers through a real-time chat simulation",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "test": "echo \"No tests configured yet\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mr-shiravani/osi-chat-simulator.git"
+  },
+  "keywords": [
+    "osi-model",
+    "networking",
+    "education",
+    "simulation",
+    "interactive",
+    "tcp",
+    "udp",
+    "layers",
+    "visualization",
+    "learning-tool"
+  ],
+  "author": "Mr-shiravani",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mr-shiravani/osi-chat-simulator/issues"
+  },
+  "homepage": "https://github.com/Mr-shiravani/osi-chat-simulator#readme"
+}

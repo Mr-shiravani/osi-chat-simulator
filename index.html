@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>OSI Chat Simulator Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">💬</div>
+                <h2>OSI Chat Simulator</h2>
+                <span class="version">v3.0 Pro</span>
+            </div>
+
+            <div class="config-section">
+                <h3>⚙️ تنظیمات شبکه</h3>
+                
+                <div class="form-group">
+                    <label>پروتکل:</label>
+                    <select id="protocolSelect">
+                        <option value="TCP">TCP (قابل اطمینان)</option>
+                        <option value="UDP">UDP (سریع)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>سرعت انیمیشن (ms):</label>
+                    <input type="range" id="speedRange" min="200" max="2000" value="600" step="100">
+                    <span class="range-value" id="speedValue">600ms</span>
+                </div>
+
+                <div class="form-group">
+                    <label>رمزنگاری:</label>
+                    <select id="encryptionSelect">
+                        <option value="AES-256">AES-256-GCM</option>
+                        <option value="AES-128">AES-128-CBC</option>
+                        <option value="none">بدون رمزنگاری</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>فشرده‌سازی:</label>
+                    <select id="compressionSelect">
+                        <option value="GZIP">GZIP</option>
+                        <option value="none">بدون فشرده‌سازی</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox">
+                        <input type="checkbox" id="errorSimulation">
+                        <span>شبیه‌سازی خطا (15%)</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" id="showBinary">
+                        <span>نمایش Binary</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" id="showHeaders">
+                        <span>نمایش Headers</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" id="autoReply">
+                        <span>پاسخ خودکار</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" id="soundEffects">
+                        <span>افکت صوتی</span>
+                    </label>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="resetBtn" class="btn btn-danger">
+                        <span>🔄 ریست</span>
+                    </button>
+                    <button id="clearAllBtn" class="btn btn-secondary">
+                        <span>🗑️ پاک کردن</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <h3>📊 آمار کلی</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalMessages">0</span>
+                        <span class="stat-label">پیام کل</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="successMessages">0</span>
+                        <span class="stat-label">موفق</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="failedMessages">0</span>
+                        <span class="stat-label">ناموفق</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="avgLatency">0ms</span>
+                        <span class="stat-label">میانگین تاخیر</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>ℹ️ راهنما</h3>
+                <ul class="help-list">
+                    <li>پیام خود را در چت تایپ کنید</li>
+                    <li>روی لایه‌ها کلیک کنید</li>
+                    <li>بسته‌ها را دنبال کنید</li>
+                    <li>از هر دو طرف پیام بفرستید</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Chat Windows -->
+            <div class="chat-container">
+                <!-- User A Chat -->
+                <div class="chat-window">
+                    <div class="chat-header">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-info">
+                            <h3>کاربر A</h3>
+                            <span class="user-status online">آنلاین</span>
+                        </div>
+                        <div class="connection-info">
+                            <span>IP: 192.168.1.10</span>
+                            <span>Port: 8080</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatA">
+                        <div class="welcome-message">
+                            <div style="font-size: 32px; margin-bottom: 10px;">💬</div>
+                            <p style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">به چت OSI خوش آمدید!</p>
+                            <p style="font-size: 12px;">پیام خود را در کادر پایین تایپ کنید</p>
+                            <p style="font-size: 12px;">و دکمه "📤 ارسال" را بزنید یا Enter بزنید</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <input type="text" id="inputA" placeholder="💬 پیام خود را اینجا بنویسید و Enter بزنید...">
+                        <button id="sendA" class="btn-send">
+                            <span>📤 ارسال</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- OSI Visualization -->
+                <div class="osi-visualization">
+                    <div class="host-stack sender">
+                        <div class="stack-label" id="labelA">Host A</div>
+                        <div class="layers-mini">
+                            <div class="layer-mini" id="sA7" data-layer="7">
+                                <span class="layer-num">7</span>
+                                <span class="layer-name">Application</span>
+                            </div>
+                            <div class="layer-mini" id="sA6" data-layer="6">
+                                <span class="layer-num">6</span>
+                                <span class="layer-name">Presentation</span>
+                            </div>
+                            <div class="layer-mini" id="sA5" data-layer="5">
+                                <span class="layer-num">5</span>
+                                <span class="layer-name">Session</span>
+                            </div>
+                            <div class="layer-mini" id="sA4" data-layer="4">
+                                <span class="layer-num">4</span>
+                                <span class="layer-name">Transport</span>
+                            </div>
+                            <div class="layer-mini" id="sA3" data-layer="3">
+                                <span class="layer-num">3</span>
+                                <span class="layer-name">Network</span>
+                            </div>
+                            <div class="layer-mini" id="sA2" data-layer="2">
+                                <span class="layer-num">2</span>
+                                <span class="layer-name">Data Link</span>
+                            </div>
+                            <div class="layer-mini" id="sA1" data-layer="1">
+                                <span class="layer-num">1</span>
+                                <span class="layer-name">Physical</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="network-channel">
+                        <div class="channel-label">📡 Network Channel</div>
+                        <div class="channel-status-box" id="channelStatusBox">
+                            <div class="status-text">آماده انتقال</div>
+                        </div>
+                        <div class="channel-line">
+                            <canvas id="networkCanvas" width="120" height="400"></canvas>
+                            <div class="packets-flow" id="packetsFlow"></div>
+                        </div>
+                        <div class="channel-stats">
+                            <div class="stat-mini">
+                                <span>Bandwidth:</span>
+                                <span id="bandwidth">1 Gbps</span>
+                            </div>
+                            <div class="stat-mini">
+                                <span>Latency:</span>
+                                <span id="latency">5ms</span>
+                            </div>
+                            <div class="stat-mini">
+                                <span>Status:</span>
+                                <span id="channelStatus" style="color: var(--success);">Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="host-stack receiver">
+                        <div class="stack-label" id="labelB">Host B</div>
+                        <div class="layers-mini">
+                            <div class="layer-mini" id="rB1" data-layer="1">
+                                <span class="layer-num">1</span>
+                                <span class="layer-name">Physical</span>
+                            </div>
+                            <div class="layer-mini" id="rB2" data-layer="2">
+                                <span class="layer-num">2</span>
+                                <span class="layer-name">Data Link</span>
+                            </div>
+                            <div class="layer-mini" id="rB3" data-layer="3">
+                                <span class="layer-num">3</span>
+                                <span class="layer-name">Network</span>
+                            </div>
+                            <div class="layer-mini" id="rB4" data-layer="4">
+                                <span class="layer-num">4</span>
+                                <span class="layer-name">Transport</span>
+                            </div>
+                            <div class="layer-mini" id="rB5" data-layer="5">
+                                <span class="layer-num">5</span>
+                                <span class="layer-name">Session</span>
+                            </div>
+                            <div class="layer-mini" id="rB6" data-layer="6">
+                                <span class="layer-num">6</span>
+                                <span class="layer-name">Presentation</span>
+                            </div>
+                            <div class="layer-mini" id="rB7" data-layer="7">
+                                <span class="layer-num">7</span>
+                                <span class="layer-name">Application</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User B Chat -->
+                <div class="chat-window">
+                    <div class="chat-header">
+                        <div class="user-avatar">👥</div>
+                        <div class="user-info">
+                            <h3>کاربر B</h3>
+                            <span class="user-status online">آنلاین</span>
+                        </div>
+                        <div class="connection-info">
+                            <span>IP: 192.168.1.20</span>
+                            <span>Port: 80</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatB">
+                        <div class="welcome-message">
+                            <div style="font-size: 32px; margin-bottom: 10px;">💬</div>
+                            <p style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">به چت OSI خوش آمدید!</p>
+                            <p style="font-size: 12px;">پیام خود را در کادر پایین تایپ کنید</p>
+                            <p style="font-size: 12px;">و دکمه "📤 ارسال" را بزنید یا Enter بزنید</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <input type="text" id="inputB" placeholder="💬 پیام خود را اینجا بنویسید و Enter بزنید...">
+                        <button id="sendB" class="btn-send">
+                            <span>📤 ارسال</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Layer Details Panel -->
+            <div class="details-panel">
+                <div class="tabs">
+                    <button class="tab active" data-tab="console">Console</button>
+                    <button class="tab" data-tab="layers">Layer Details</button>
+                    <button class="tab" data-tab="packets">Packets</button>
+                    <button class="tab" data-tab="analysis">Analysis</button>
+                </div>
+
+                <div class="tab-content active" id="console">
+                    <div class="console-header">
+                        <span>📋 System Log</span>
+                        <div class="console-actions">
+                            <button class="btn-icon" id="clearConsole">🗑️</button>
+                            <button class="btn-icon" id="exportLog">💾</button>
+                        </div>
+                    </div>
+                    <div class="console-content" id="consoleContent"></div>
+                </div>
+
+                <div class="tab-content" id="layers">
+                    <div class="layer-details-content" id="layerDetailsContent">
+                        <p class="placeholder">روی لایه‌ها کلیک کنید تا جزئیات نمایش داده شود</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="packets">
+                    <div class="packets-list" id="packetsList"></div>
+                </div>
+
+                <div class="tab-content" id="analysis">
+                    <div class="analysis-grid">
+                        <div class="metric-card">
+                            <h4>Round Trip Time</h4>
+                            <div class="metric-value" id="rttValue">0 ms</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Throughput</h4>
+                            <div class="metric-value" id="throughput">0 Kbps</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Packet Loss</h4>
+                            <div class="metric-value" id="packetLoss">0%</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Success Rate</h4>
+                            <div class="metric-value" id="successRate">0%</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="performanceChart" width="800" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>OSI Chat Simulator v3.0 | Educational Project | 
+        <a href="https://github.com/Mr-shiravani" target="_blank" rel="noopener noreferrer">@Mr-shiravani</a></p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

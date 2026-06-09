@@ -155,7 +155,7 @@ Then open: **http://localhost:8000**
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    USER TYPES MESSAGE                    │
+│                    USER TYPES MESSAGE                   │
 └──────────────────────┬──────────────────────────────────┘
                        │
                        ▼
@@ -164,16 +164,16 @@ Then open: **http://localhost:8000**
         ├──────────────────────────────┤
         │ Layer 7 → Application        │ ← Message received
         │ Layer 6 → Presentation       │ ← Encrypt & Compress
-        │ Layer 5 → Session           │ ← Session management
-        │ Layer 4 → Transport         │ ← TCP/UDP + Port
-        │ Layer 3 → Network           │ ← IP addressing
-        │ Layer 2 → Data Link         │ ← MAC + Checksum
-        │ Layer 1 → Physical          │ ← Convert to bits
+        │ Layer 5 → Session            │ ← Session management
+        │ Layer 4 → Transport          │ ← TCP/UDP + Port
+        │ Layer 3 → Network            │ ← IP addressing
+        │ Layer 2 → Data Link          │ ← MAC + Checksum
+        │ Layer 1 → Physical           │ ← Convert to bits
         └──────────┬───────────────────┘
                    │
                    ▼
         ╔══════════════════════════════╗
-        ║   📦 PACKET TRANSMISSION    ║
+        ║   📦 PACKET TRANSMISSION     ║
         ║   Network Channel Animation  ║
         ╚══════════╦═══════════════════╝
                    │
@@ -181,18 +181,18 @@ Then open: **http://localhost:8000**
         ┌──────────────────────────────┐
         │   Host B (Receiver Side)     │
         ├──────────────────────────────┤
-        │ Layer 1 → Physical          │ ← Receive bits
-        │ Layer 2 → Data Link         │ ← Verify checksum
-        │ Layer 3 → Network           │ ← Check IP
-        │ Layer 4 → Transport         │ ← Reassemble
-        │ Layer 5 → Session           │ ← Verify session
+        │ Layer 1 → Physical           │ ← Receive bits
+        │ Layer 2 → Data Link          │ ← Verify checksum
+        │ Layer 3 → Network            │ ← Check IP
+        │ Layer 4 → Transport          │ ← Reassemble
+        │ Layer 5 → Session            │ ← Verify session
         │ Layer 6 → Presentation       │ ← Decrypt & Decompress
         │ Layer 7 → Application        │ ← Deliver message
         └──────────┬───────────────────┘
                    │
                    ▼
         ┌──────────────────────────────┐
-        │   MESSAGE DISPLAYED TO USER   │
+        │   MESSAGE DISPLAYED TO USER  │
         └──────────────────────────────┘
 ```
 
